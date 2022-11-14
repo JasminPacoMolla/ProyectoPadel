@@ -5,9 +5,9 @@ require_once __DIR__."/autoload.php";
 use app\Personas\Persona;
 use app\Personas\Jugador;
 use Modelo\PersonaDAOMySQL;
+use Vista\Personas\PersonaVista;
 
 
-$personaDAO = new PersonaDAOMySQL();
   /*  if($personaDAO->getConexion()){
     echo "it works !!!!";
     }
@@ -15,9 +15,12 @@ $personaDAO = new PersonaDAOMySQL();
     echo "ERROR";
     }*/
 
-$persona = new Persona("11111111","yasmin","moussaoui","ymoussaoui15@gmail.com","1111111");
-var_dump($persona);
-$resultado1 = $personaDAO->insertarPersona($persona);
+//$persona = new Persona("11111111","yasmin","moussaoui","ymoussaoui15@gmail.com","1111111");
+//var_dump($persona);
+//$resultado1 = $personaDAO->insertarPersona($persona);
+$vista = new PersonaVista("Cobra Padel");
+//$index = $vista->getHtml()->generarEncabezado("Padel");
+//echo $vista->getHtml()->generarFooter();
 
 //$modificacion = $personaDAO->modificarPersona($persona);
 
@@ -30,3 +33,5 @@ $resultado1 = $personaDAO->insertarPersona($persona);
 
 //var_dump($resultado);
 //var_dump($array);
+
+echo $vista;

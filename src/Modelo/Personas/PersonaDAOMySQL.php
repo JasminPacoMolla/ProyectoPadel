@@ -25,6 +25,19 @@ class PersonaDAOMySQL extends PersonaDAO
 
     }
 
+    public function leerPersonaPorCorreo(String $correo):?Persona{
+        $query = "Select * FROM PERSONA where CORREOELECTRONICO =?";
+        $sentencia = $this->getConexion()->prepare($query);
+        $sentencia ->bindParam(1,$correo);
+       if($sentencia->execute()){
+           $fila = $sentencia->fetch();
+           return $this->convertirArrayPersona($fila);
+       }
+       else{
+           return null;
+       }
+    }
+
     public function modificarPersona(Persona $persona):?Persona{
         $query = "update PERSONA set NOMBRE=:nombre, 
                                     APELLIDOS=:apellidos, 

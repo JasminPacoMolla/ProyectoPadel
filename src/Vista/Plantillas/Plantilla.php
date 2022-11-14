@@ -1,8 +1,8 @@
 <?php
 
-namespace Vista\Plantilla;
+namespace Vista\Plantillas;
 
-class plantilla
+class Plantilla
 {
 private string $encabezado;
 private string $nav;
@@ -37,11 +37,11 @@ private string $footer;
                     
                     -->
                         <!-- Additional CSS Files -->
-                        <link rel='stylesheet' type='text/css' href='assets/css/bootstrap.min.css'>
+                        <link rel='stylesheet' type='text/css' href='Vista/Plantillas/assets/css/bootstrap.min.css'>
                     
-                        <link rel='stylesheet' type='text/css' href='assets/css/font-awesome.css'>
+                        <link rel='stylesheet' type='text/css' href='Vista/Plantillas//assets/css/font-awesome.css'>
                     
-                        <link rel='stylesheet' href='assets/css/templatemo-training-studio.css'>
+                        <link rel='stylesheet' href='Vista/Plantillas/assets/css/templatemo-training-studio.css'>
                     
                         </head>
                         
@@ -62,7 +62,7 @@ private string $footer;
 
 
 
-    public function generarBarraNavegacion(array $opcionesMenu,string $dirLogo="/assets/img/logo.png"){
+    public function generarBarraNavegacion(array $opcionesMenu,string $dirLogo="Vista/Plantillas/assets/images/logo.jpg"){
         $this->nav = "
                     <header class='header-area header-sticky'>
                       <div class='container'>
@@ -72,12 +72,12 @@ private string $footer;
                                       <!-- ***** Logo Start ***** -->
                                       
                                      
-                                      <a href='index.html' class='logo'> <img src='$dirLogo'></a>
+                                      <a href='index.html' class='logo'> <img src='$dirLogo' width='100px' height='75px'></a>
                                       <!-- ***** Logo End ***** -->
                                       <!-- ***** Menu Start ***** -->
                                       <ul class='nav'>";
                                         foreach ($opcionesMenu as $opcion=>$enlace){
-                                            echo " <li class='scroll-to-section'><a href='#top' class='active'>".strtoupper($opcion)."</a></li>";
+                                            $this->nav.= " <li class='scroll-to-section'><a href='#top' class='active'>".strtoupper($opcion)."</a></li>";
                                         }
                                     $this->nav.=/*"
 
@@ -101,6 +101,51 @@ private string $footer;
 
     public function generarFooter(){
         $this->footer = "
+             
+                        <section class='section' id='contact-us'>
+                            <div class='container-fluid'>
+                                <div class='row'>
+                                    <div class='col-lg-6 col-md-6 col-xs-12'>
+                                        <div id='map'>
+                                          <iframe src='https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed' width='100%' height='600px' frameborder='0' style='border:0' allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                    <div class='col-lg-6 col-md-6 col-xs-12'>
+                                        <div class='contact-form'>
+                                            <form id='contact' action='' method='post'>
+                                              <div class='row'>
+                                                <div class='col-md-6 col-sm-12'>
+                                                  <fieldset>
+                                                    <input name='name' type='text' id='name' placeholder='Your Name*' required=''>
+                                                  </fieldset>
+                                                </div>
+                                                <div class='col-md-6 col-sm-12'>
+                                                  <fieldset>
+                                                    <input name='email' type='text' id='email' pattern='[^ @]*@[^ @]*' placeholder='Your Email*' required=''>
+                                                  </fieldset>
+                                                </div>
+                                                <div class='col-md-12 col-sm-12'>
+                                                  <fieldset>
+                                                    <input name='subject' type='text' id='subject' placeholder='Subject'>
+                                                  </fieldset>
+                                                </div>
+                                                <div class='col-lg-12'>
+                                                  <fieldset>
+                                                    <textarea name='message' rows='6' id='message' placeholder='Message' required=''></textarea>
+                                                  </fieldset>
+                                                </div>
+                                                <div class='col-lg-12'>
+                                                  <fieldset>
+                                                    <button type='submit' id='form-submit' class='main-button'>Send Message</button>
+                                                  </fieldset>
+                                                </div>
+                                              </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                       <footer>
                             <div class='container'>
                                 <div class='row'>
@@ -117,22 +162,22 @@ private string $footer;
                         </footer>
                         
                         <!-- jQuery -->
-                        <script src='assets/js/jquery-2.1.0.min.js'></script>
+                        <script src='Vista/Plantillas//assets/js/jquery-2.1.0.min.js'></script>
                         
                         <!-- Bootstrap -->
-                        <script src='assets/js/popper.js'></script>
-                        <script src='assets/js/bootstrap.min.js'></script>
+                        <script src='Vista/Plantillas//assets/js/popper.js'></script>
+                        <script src='Vista/Plantillas/assets/js/bootstrap.min.js'></script>
                         
                         <!-- Plugins -->
-                        <script src='assets/js/scrollreveal.min.js'></script>
-                        <script src='assets/js/waypoints.min.js'></script>
-                        <script src='assets/js/jquery.counterup.min.js'></script>
-                        <script src='assets/js/imgfix.min.js'></script> 
-                        <script src='assets/js/mixitup.js'></script> 
-                        <script src='assets/js/accordions.js'></script>
+                        <script src='Vista/Plantillas/assets/js/scrollreveal.min.js'></script>
+                        <script src='Vista/Plantillas/assets/js/waypoints.min.js'></script>
+                        <script src='Vista/Plantillas/assets/js/jquery.counterup.min.js'></script>
+                        <script src='Vista/Plantillas/assets/js/imgfix.min.js'></script> 
+                        <script src='Vista/Plantillas/assets/js/mixitup.js'></script> 
+                        <script src='Vista/Plantillas/assets/js/accordions.js'></script>
                         
                         <!-- Global Init -->
-                        <script src='assets/js/custom.js'></script>
+                        <script src='Vista/Plantillas/assets/js/custom.js'></script>
                         
                         </body>
                         </html>
@@ -140,10 +185,11 @@ private string $footer;
         ";
     }
     public function generarTodaLaPagina():string{
-        $salida = $this->encabezado;
+        $salida= $this->encabezado;
         $salida.=$this->nav;
         $salida.=$this->footer;
 
         return $salida;
+
     }
 }

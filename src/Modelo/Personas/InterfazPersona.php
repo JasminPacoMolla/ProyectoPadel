@@ -9,6 +9,7 @@ interface InterfazPersona{
     public function borrarPersona(Persona $persona):?Persona;
     public function borrarPersonaPorDni(string $DNI):?Persona;
     public function leerPersona(string $dni):?Persona;
+    public function leerPersonaPorCorreo(string $correo):?Persona;
     public function leerTodasLasPersonas():array;
     public function obtenerPersonasSinTelefono():array;
     public function obtenerPersonaPorNombre(string $nombre):array;
