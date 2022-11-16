@@ -102,7 +102,7 @@ class Persona
     /**
      * @return mixed
      */
-    public function getTelefono():int
+    public function getTelefono():string
     {
         return $this->telefono;
     }

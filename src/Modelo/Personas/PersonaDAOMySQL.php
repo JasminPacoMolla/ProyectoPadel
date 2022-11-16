@@ -11,7 +11,7 @@ class PersonaDAOMySQL extends PersonaDAO
 {
     public function __construct(){
         //$this->setConexion(new PDO("mysql:host=".HOSTBD."; dbname=".NOMBREBD.,USUARIOBD,PASSBD));
-        $this->setConexion(new PDO("mysql:host=db; dbname=padel","jasmin","1234"));
+        $this->setConexion(new PDO("mysql:host=db; dbname=padel","jasmin","12345"));
 
         $this->getConexion()->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
     }

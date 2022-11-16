@@ -1,37 +1,37 @@
 <?php
 
-require_once __DIR__."/autoload.php";
+
 
 use app\Personas\Persona;
 use app\Personas\Jugador;
 use Modelo\PersonaDAOMySQL;
 use Vista\Personas\PersonaVista;
+use Controlador\Persona\PersonaControlador;
+use app\Router;
+include __DIR__."/autoload.php";
+
+$router = new Router();
+$router->guardarRuta('/',function (){echo "estoy en el index";});
+$router->guardarRuta('/persona', [PersonaControlador::class,"login"]);
+
+$router->resolverRuta($_SERVER['REQUEST_URI']);
 
 
-  /*  if($personaDAO->getConexion()){
-    echo "it works !!!!";
-    }
-    else{
-    echo "ERROR";
-    }*/
 
-//$persona = new Persona("11111111","yasmin","moussaoui","ymoussaoui15@gmail.com","1111111");
-//var_dump($persona);
-//$resultado1 = $personaDAO->insertarPersona($persona);
 $vista = new PersonaVista("Cobra Padel");
 //$index = $vista->getHtml()->generarEncabezado("Padel");
-//echo $vista->getHtml()->generarFooter();
+//echo $vista;
 
-//$modificacion = $personaDAO->modificarPersona($persona);
+$controlador = new PersonaControlador();
+//$controlador->crear();
+$controlador->comprobarUsuarioWeb("ymoussaoui15@gmail.com","1234");
 
-//$miDni = $personaDAO->leerPersona("34371722Q");
-//var_dump($miDni);
 
-//$array = $personaDAO->leerTodasLasPersonas();
-//$resultado = $personaDAO->obtenerRangoPersonas(2,1);
-//$resultado = $personaDAO->obtenerPersonaPorNombre("jas");
+//echo $_SERVER['REQUEST_URI']."<br>";
+//echo parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
+//if((parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH))==='persona'){
+//    $persona = new PersonaControlador();
+//    $persona->crear();}
 
-//var_dump($resultado);
-//var_dump($array);
 
-echo $vista;
+

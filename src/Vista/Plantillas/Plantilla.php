@@ -62,7 +62,7 @@ private string $footer;
 
 
 
-    public function generarBarraNavegacion(array $opcionesMenu,string $dirLogo="Vista/Plantillas/assets/images/logo.jpg"){
+    public function generarBarraNavegacion(array $opcionesMenu,string $dirLogo="Vista/Plantillas/assets/images/logo2.jpg"){
         $this->nav = "
                     <header class='header-area header-sticky'>
                       <div class='container'>
@@ -72,7 +72,7 @@ private string $footer;
                                       <!-- ***** Logo Start ***** -->
                                       
                                      
-                                      <a href='index.html' class='logo'> <img src='$dirLogo' width='100px' height='75px'></a>
+                                      <a href='index.html' class='logo'> <img src='$dirLogo' width='200px' height='75px'></a>
                                       <!-- ***** Logo End ***** -->
                                       <!-- ***** Menu Start ***** -->
                                       <ul class='nav'>";

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 02-11-2022 a las 15:14:11
+-- Tiempo de generación: 15-11-2022 a las 15:24:43
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.19
 
@@ -37,6 +37,9 @@ CREATE TABLE `PERSONA` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
+-- Volcado de datos para la tabla `PERSONA`
+--
+
 -- Índices para tablas volcadas
 --
 
@@ -44,7 +47,8 @@ CREATE TABLE `PERSONA` (
 -- Indices de la tabla `PERSONA`
 --
 ALTER TABLE `PERSONA`
-  ADD PRIMARY KEY (`DNI`);
+  ADD PRIMARY KEY (`DNI`),
+  ADD UNIQUE KEY `CORREOELECTRONICO` (`CORREOELECTRONICO`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
