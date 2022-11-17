@@ -42,7 +42,21 @@ class PersonaControlador
         echo "Este es la página de login";
     }
 
+    public function mostrar($dni){
+        echo $dni;
+    }
+    public function guardar(){
+        echo "Estamos guardando";
 
+    }
+    public function borrar(){
+        echo "Estamos borrando";
+
+    }
+    public function modificar(){
+        echo "Estamos modificando";
+
+    }
 
 
 

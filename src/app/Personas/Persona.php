@@ -2,7 +2,7 @@
 
 namespace app\Personas;
 
-class Persona
+class Persona //implements \JsonSerializable
 {
     /**
      * @var string
@@ -152,14 +152,20 @@ class Persona
         $this->contrasenya = $contrasenya;
         return $this;
     }
+//    public function __toString(): string
+//    {
+//        return $this->nombre. " ".$this->apellidos." ".$this->dni;
+//    }
 
 
-
-
-
-
-
-
-
-
+//    public function jsonSerialize(): mixed
+//    {
+//        return [
+//            'dni'=>$this->dni,
+//            'nombre'=>$this->nombre,
+//            'apellidos'=>$this->apellidos,
+//            'telefono'=>$this->telefono,
+//            'correoElectronico'=>$this->correoElectronico
+//        ];
+//    }
 }
