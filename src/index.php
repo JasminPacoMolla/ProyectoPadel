@@ -11,10 +11,10 @@ use app\Router;
 include __DIR__."/autoload.php";
 
 $router = new Router();
-$router->guardarRuta('get','/personas', [PersonaControlador::class,"mostrar"]);
-$router->guardarRuta('post','/personas', [PersonaControlador::class,"guardar"]);
-$router->guardarRuta('delete','/personas', [PersonaControlador::class,"borrar"]);
-$router->guardarRuta('put','/personas', [PersonaControlador::class,"modificar"]);
+$router->guardarRuta('get','/api/personas', [PersonaControlador::class,"mostrar"]);
+$router->guardarRuta('post','/api/personas', [PersonaControlador::class,"guardar"]);
+$router->guardarRuta('delete','/api/personas', [PersonaControlador::class,"borrar"]);
+$router->guardarRuta('put','/api/personas', [PersonaControlador::class,"modificar"]);
 
 
 $router->resolverRuta($_SERVER['REQUEST_URI'],$_SERVER['REQUEST_METHOD']);

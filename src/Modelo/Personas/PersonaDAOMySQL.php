@@ -2,6 +2,8 @@
 
 namespace Modelo\Personas;
 use app\Personas\Persona;
+use Modelo\Exceptions\ActualizarPersonasException;
+use Modelo\Exceptions\PersonaNoEncontradaException;
 use \PDO;
 
 require_once __DIR__ . "/../../datosConexionBD.php";
@@ -16,13 +18,35 @@ class PersonaDAOMySQL extends PersonaDAO
         $this->getConexion()->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
     }
     public function leerPersona(String $dni):?Persona{
-        $query = "Select * FROM PERSONA where DNI =?";
+        $query = "SELECT * FROM PERSONA WHERE DNI=?";
         $sentencia = $this->getConexion()->prepare($query);
-        $sentencia ->bindParam(1,$dni);
-        $resultado= $sentencia->execute();
-        $fila = $sentencia->fetch();
-        return new Persona($fila['DNI'],$fila['NOMBRE'],$fila['APELLIDOS'],$fila['CORREOELECTRONICO'],$fila['CONTRASENYA'],$fila['TELEFONO']);
+        $sentencia->bindParam(1, $dni);
+        $sentencia->execute();
 
+        if(($fila = $sentencia->fetch())){
+            if($fila['TELEFONO'] == null){
+                return new Persona(
+                    $fila['DNI'],
+                    $fila['NOMBRE'],
+                    $fila['APELLIDOS'],
+                    $fila['CORREOELECTRONICO'],
+                    $fila['CONTRASENYA']
+                );
+            }
+            else{
+                return new Persona(
+                    $fila['DNI'],
+                    $fila['NOMBRE'],
+                    $fila['APELLIDOS'],
+                    $fila['CORREOELECTRONICO'],
+                    $fila['CONTRASENYA'],
+                    $fila['TELEFONO']
+                );
+            }
+
+        }else{
+            throw new PersonaNoEncontradaException("La persona no existe en la base de datos");
+        }
     }
 
     public function leerPersonaPorCorreo(String $correo):?Persona{
@@ -62,10 +86,64 @@ class PersonaDAOMySQL extends PersonaDAO
             return null;
         }
     }
+    public function modificarTodasLasPersona(array $elementosAmodificar){
+        $query = "update PERSONA set ";
+
+        if(isset($elementosAmodificar['nombre'])){
+            $query.="NOMBRE=:nombre,";
+        }
+        if(isset($elementosAmodificar['apellidos'])){
+            $query.="APELLIDOS=:apellidos,";
+
+        }
+        if(isset($elementosAmodificar['telefono'])){
+            $query.="TELEFONO=:telefono,";
+
+        }
+        if(isset($elementosAmodificar['contrasenya'])){
+            $query.="CONTRASENYA=:contrasenya,";
+
+        }
+        $query = substr($query,0,-1);
+        $sentencia = $this->getConexion()->prepare($query);
+
+        if(isset($elementosAmodificar['nombre'])){
+            $sentencia->bindParam("nombre",$elementosAmodificar['nombre']);
+        }
+        if(isset($elementosAmodificar['apellidos'])){
+            $sentencia->bindParam("apellidos",$elementosAmodificar['apellidos']);
+
+        }
+        if(isset($elementosAmodificar['telefono'])){
+            $sentencia->bindParam("telefono",$elementosAmodificar['telefono']);
+
+        }
+        if(isset($elementosAmodificar['contrasenya'])){
+            $pass = password_hash($elementosAmodificar['contrasenya'],PASSWORD_DEFAULT);
+            $sentencia->bindParam("contrasenya",$pass);
+
+        }
+
+        try{
+            $resultado = $sentencia->execute();
+
+        }catch (\PDOException $e){
+            throw new ActualizarPersonasException("no se puede actualizar");
+        }
+
+
+
+
+
+    }
 
     public function borrarPersonaPorDni($dni):?Persona {
-        $persona = $this->leerPersona($dni);
-        $query = "delete from persona where DNI=?";
+        try{
+            $persona = $this->leerPersona($dni);
+        }catch(PersonaNoEncontradaException $e){
+            throw new PersonaNoEncontradaException("No se puede borrar");
+        }
+        $query = "delete from PERSONA where DNI=?";
         $sentencia = $this->getConexion()->prepare($query);
         $sentencia->bindParam(1,$dni);
         $resultado = $sentencia->execute();
@@ -81,6 +159,11 @@ class PersonaDAOMySQL extends PersonaDAO
     {
        $resultado = $this->borrarPersonaPorDni($persona->getDni());
        return $resultado;
+    }
+    public function borrarTodasLasPersonas():bool{
+        $sentencia=$this->getConexion()->query("TRUNCATE PERSONA");
+        return $sentencia->execute();
+
     }
 
     public function insertarPersona(Persona $persona): ?Persona
@@ -194,6 +277,34 @@ class PersonaDAOMySQL extends PersonaDAO
         }
         return new Persona($datosPersona['DNI'],$datosPersona['NOMBRE'],$datosPersona['APELLIDOS'],$datosPersona['CORREOELECTRONICO'],
             $datosPersona['CONTRASENYA'],$datosPersona['TELEFONO']);
+    }
+
+    public function existeDni($dni){
+        $query = "SELECT * FROM PERSONA WHERE dni = ?";
+        $sentencia = $this->getConexion()->prepare($query);
+        $sentencia->bindParam(1,$dni);
+        $sentencia->execute();
+
+        if($sentencia->fetch()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function existeCorreo($correo){
+        $query = "SELECT * FROM PERSONA WHERE correoelectronico = ?";
+        $sentencia = $this->getConexion()->prepare($query);
+        $sentencia->bindParam(1,$correo);
+        $sentencia->execute();
+
+        if($sentencia->fetch()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 
