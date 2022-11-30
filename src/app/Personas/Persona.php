@@ -158,14 +158,26 @@ class Persona //implements \JsonSerializable
 //    }
 
 
-//    public function jsonSerialize(): mixed
-//    {
-//        return [
-//            'dni'=>$this->dni,
-//            'nombre'=>$this->nombre,
-//            'apellidos'=>$this->apellidos,
-//            'telefono'=>$this->telefono,
-//            'correoElectronico'=>$this->correoElectronico
-//        ];
-//    }
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'dni'=>$this->dni,
+            'nombre'=>$this->nombre,
+            'apellidos'=>$this->apellidos,
+            'telefono'=>$this->telefono,
+            'correoElectronico'=>$this->correoElectronico
+        ];
+    }
+    public function jsonSerializeMongo(): mixed
+    {
+        return [
+            'DNI'=>$this->dni,
+            'NOMBRE'=>$this->nombre,
+            'APELLIDOS'=>$this->apellidos,
+            'TELEFONO'=>$this->telefono,
+            'CONTRASENYA' => $this->contrasenya,
+            'CORREOELECTRONICO'=>$this->correoElectronico
+
+        ];
+    }
 }

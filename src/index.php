@@ -1,29 +1,42 @@
 <?php
 
 
-
+use app\Controlador\Persona\PersonaControlador;
+use app\Modelo\Personas\PersonaDAOMongoDb;
 use app\Personas\Persona;
-use app\Personas\Jugador;
-use Modelo\PersonaDAOMySQL;
-use Vista\Personas\PersonaVista;
-use Controlador\Persona\PersonaControlador;
 use app\Router;
-include __DIR__."/autoload.php";
+use app\Modelo\PersonaDAOMySQL;
+use app\Vista\Personas\PersonaVista;
+use app\Vista\LandingVista;
+use app\Vista\LoginVista;
+
+include __DIR__."/vendor/autoload.php";
+
+$mongodb = new PersonaDAOMongoDb();
+//$persona = $mongodb->leerTodasLasPersonas();
+$persona2 = new Persona("1234567","ya","m","yas@gmail.com","1236");
+var_dump($persona2);
+$mongodb->borrarPersonaPorDni("123456");
+
+
+
+
 
 $router = new Router();
-$router->guardarRuta('get','/api/personas', [PersonaControlador::class,"mostrar"]);
-$router->guardarRuta('post','/api/personas', [PersonaControlador::class,"guardar"]);
-$router->guardarRuta('delete','/api/personas', [PersonaControlador::class,"borrar"]);
-$router->guardarRuta('put','/api/personas', [PersonaControlador::class,"modificar"]);
+$router->guardarRuta('get','/',[LandingVista::class,"mostrarPagina"]);
+$router->guardarRuta('get','/login',[LoginVista::class,"mostrarLogin"]);
+$router->guardarRuta('post','/logear',[PersonaControlador::class,"recibirDatosLogin"]);
+$router->guardarRuta('get','/api/persona',[PersonaControlador::class,"mostrar"]);
+$router->guardarRuta('post','/api/persona',[PersonaControlador::class,"guardar"]);
+$router->guardarRuta('delete','/api/persona',[PersonaControlador::class,"borrar"]);
+$router->guardarRuta('put','/api/persona',[PersonaControlador::class,"modificar"]);
 
-
-$router->resolverRuta($_SERVER['REQUEST_URI'],$_SERVER['REQUEST_METHOD']);
+//$router->resolverRuta($_SERVER['REQUEST_URI'],$_SERVER['REQUEST_METHOD']);
 
 
 
 //$vista = new PersonaVista("Cobra Padel");
 //$index = $vista->getHtml()->generarEncabezado("Padel");
-//echo $vista;
 
 //$controlador = new PersonaControlador();
 //$controlador->crear();
