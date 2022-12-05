@@ -83,6 +83,10 @@ abstract class PersonaDAO implements InterfazPersona
     {
         // TODO: Implement obtenerRangoPersonas() method.
     }
+    public function modificarTodasLasPersonas(array $elementosAModificar)
+    {
+        // TODO: Implement modificarTodasLasPersonas() method.
+    }
 
     protected function convertirArrayPersona(array $datosPersona):?Persona{
         if(!isset($datosPersona['TELEFONO']) || ($datosPersona['TELEFONO'] == NULL)){

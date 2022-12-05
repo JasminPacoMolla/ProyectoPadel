@@ -14,8 +14,9 @@ include __DIR__."/vendor/autoload.php";
 
 $mongodb = new PersonaDAOMongoDb();
 //$persona = $mongodb->leerTodasLasPersonas();
-$persona2 = new Persona("012345", "FATIMA","msw","FAFI@GMAIL.COM","0000");
-$mongodb->modificarPersona($persona2);
+$persona2 = new Persona("012345", "MOM","msw","FAFI@GMAIL","0000");
+$elementos = ["NOMBRE"=>"YASMIN"];
+$mongodb->modificarTodasLasPersonas($elementos);
 
 
 

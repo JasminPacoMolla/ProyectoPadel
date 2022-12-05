@@ -5,6 +5,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src/app/Horarios" isTestSource="false" packagePrefix="app\Horarios" />
       <sourceFolder url="file://$MODULE_DIR$/src/app/Personas" isTestSource="false" packagePrefix="app\Personas" />
       <sourceFolder url="file://$MODULE_DIR$/src/app/Servicios" isTestSource="false" packagePrefix="app\Servicios" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-php81" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/brick/math" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/ramsey/uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/ramsey/collection" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

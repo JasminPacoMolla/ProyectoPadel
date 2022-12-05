@@ -15,6 +15,8 @@ interface InterfazPersona{
     public function obtenerPersonaPorNombre(string $nombre):array;
     public function obtenerPersonasPorApellidos(string $apellidos): array;
     public function obtenerRangoPersonas(int $inicio,int $numeroResultado):array;
+    public function modificarTodasLasPersonas(array $elementosAModificar);
 
 
-}
+
+    }
