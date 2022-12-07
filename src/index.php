@@ -2,6 +2,7 @@
 
 
 use app\Controlador\Persona\PersonaControlador;
+use app\Controlador\Servicios\PistaControlador;
 use app\Modelo\Personas\PersonaDAOMongoDb;
 use app\Personas\Persona;
 use app\Router;
@@ -31,7 +32,12 @@ $router->guardarRuta('post','/api/persona',[PersonaControlador::class,"guardar"]
 $router->guardarRuta('delete','/api/persona',[PersonaControlador::class,"borrar"]);
 $router->guardarRuta('put','/api/persona',[PersonaControlador::class,"modificar"]);
 
-//$router->resolverRuta($_SERVER['REQUEST_URI'],$_SERVER['REQUEST_METHOD']);
+$router->guardarRuta('get','/api/pista',[PistaControlador::class,"mostrar"]);
+$router->guardarRuta('post','/api/pista',[PistaControlador::class,"guardar"]);
+$router->guardarRuta('delete','/api/pista',[PistaControlador::class,"borrar"]);
+$router->guardarRuta('put','/api/pista',[PistaControlador::class,"modificar"]);
+
+$router->resolverRuta($_SERVER['REQUEST_URI'],$_SERVER['REQUEST_METHOD']);
 
 
 
