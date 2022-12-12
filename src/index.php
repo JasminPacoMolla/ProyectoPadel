@@ -3,6 +3,7 @@
 
 use app\Controlador\Persona\PersonaControlador;
 use app\Controlador\Servicios\PistaControlador;
+use app\Horarios\Intervalo;
 use app\Modelo\Personas\PersonaDAOMongoDb;
 use app\Personas\Persona;
 use app\Router;
@@ -15,29 +16,30 @@ include __DIR__."/vendor/autoload.php";
 
 $mongodb = new PersonaDAOMongoDb();
 //$persona = $mongodb->leerTodasLasPersonas();
-$persona2 = new Persona("012345", "MOM","msw","FAFI@GMAIL","0000");
-$elementos = ["NOMBRE"=>"YASMIN"];
-$mongodb->modificarTodasLasPersonas($elementos);
+//$persona2 = new Persona("012345", "MOM","msw","FAFI@GMAIL","0000");
+//$elementos = ["NOMBRE"=>"YASMIN"];
+//$mongodb->modificarTodasLasPersonas($elementos);
+
+$intervalo = new Intervalo(8.5,10.5);
+$intervalo = new Intervalo(8.5,10.5);
 
 
-
-
-
-$router = new Router();
-$router->guardarRuta('get','/',[LandingVista::class,"mostrarPagina"]);
-$router->guardarRuta('get','/login',[LoginVista::class,"mostrarLogin"]);
-$router->guardarRuta('post','/logear',[PersonaControlador::class,"recibirDatosLogin"]);
-$router->guardarRuta('get','/api/persona',[PersonaControlador::class,"mostrar"]);
-$router->guardarRuta('post','/api/persona',[PersonaControlador::class,"guardar"]);
-$router->guardarRuta('delete','/api/persona',[PersonaControlador::class,"borrar"]);
-$router->guardarRuta('put','/api/persona',[PersonaControlador::class,"modificar"]);
-
-$router->guardarRuta('get','/api/pista',[PistaControlador::class,"mostrar"]);
-$router->guardarRuta('post','/api/pista',[PistaControlador::class,"guardar"]);
-$router->guardarRuta('delete','/api/pista',[PistaControlador::class,"borrar"]);
-$router->guardarRuta('put','/api/pista',[PistaControlador::class,"modificar"]);
-
-$router->resolverRuta($_SERVER['REQUEST_URI'],$_SERVER['REQUEST_METHOD']);
+//
+//$router = new Router();
+//$router->guardarRuta('get','/',[LandingVista::class,"mostrarPagina"]);
+//$router->guardarRuta('get','/login',[LoginVista::class,"mostrarLogin"]);
+//$router->guardarRuta('post','/logear',[PersonaControlador::class,"recibirDatosLogin"]);
+//$router->guardarRuta('get','/api/persona',[PersonaControlador::class,"mostrar"]);
+//$router->guardarRuta('post','/api/persona',[PersonaControlador::class,"guardar"]);
+//$router->guardarRuta('delete','/api/persona',[PersonaControlador::class,"borrar"]);
+//$router->guardarRuta('put','/api/persona',[PersonaControlador::class,"modificar"]);
+//
+//$router->guardarRuta('get','/api/pista',[PistaControlador::class,"mostrar"]);
+//$router->guardarRuta('post','/api/pista',[PistaControlador::class,"guardar"]);
+//$router->guardarRuta('delete','/api/pista',[PistaControlador::class,"borrar"]);
+//$router->guardarRuta('put','/api/pista',[PistaControlador::class,"modificar"]);
+//
+//$router->resolverRuta($_SERVER['REQUEST_URI'],$_SERVER['REQUEST_METHOD']);
 
 
 
