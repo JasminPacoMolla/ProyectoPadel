@@ -39,7 +39,6 @@ class PersonaControlador
     public function comprobarUsuarioWeb($correoUsuario,$pass){
              $persona = $this->modelo->leerPersonaPorCorreo($correoUsuario);
         if(password_verify($pass,$persona->getContrasenya())){
-            echo "yupiiiii";
             session_start();
             $_SESSION['logeado']=true;
             $_SESSION['usuario']=$this->modelo->leerPersonaPorCorreoElectronico($correoUsuario)->getNombre();
@@ -49,12 +48,12 @@ class PersonaControlador
         }
 
     }
-    public function crear(){
-
-        $pasCifrado = password_hash("1234",PASSWORD_DEFAULT);
-        $persona = new Persona("2331111","ayoub","moussaoui","ymoussaoui15@gmail.com",$pasCifrado);
-        $this->modelo->insertarPersona($persona);
-    }
+//    public function crear(){
+//
+//        $pasCifrado = password_hash("1234",PASSWORD_DEFAULT);
+//        $persona = new Persona("2331111","ayoub","moussaoui","ymoussaoui15@gmail.com",$pasCifrado);
+//        $this->modelo->insertarPersona($persona);
+//    }
     public function login()  {
         echo "Este es la página de login";
     }

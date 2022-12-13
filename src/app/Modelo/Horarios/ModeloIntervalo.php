@@ -18,12 +18,14 @@ class ModeloIntervalo
     /*****************************************************************************/
 
     public function insertarIntervalo(Intervalo $intervalo,$fecha):?Intervalo{
-        $query = 'Insert into intervaloDia (inicioIntervalo,finIntervalo,disponibilidad) 
-values (:inicio,:fin,:disponibilidad)';
+        $query = 'Insert into intervaloDia (horaInicio,horaFin,disponibilidad,idHorarioDiario) 
+values (:inicio,:fin,:disponibilidad,:horario)';
         $sentencia = $this->conexion->prepare($query);
         $sentencia->bindValue("inicio",$intervalo->getHoraInicio);
         $sentencia->bindValue("fin",$intervalo->getHoraFin);
+        $sentencia->bindValue("horario",$fecha);
         $sentencia->bindValue("diponibilidad",$intervalo->isDisponible);
+
 
         $resultado = $sentencia->execute();
         if($resultado){
@@ -35,18 +37,36 @@ values (:inicio,:fin,:disponibilidad)';
     }
     /*****************************************************************************/
 
-    public function leerIntervalo(int $id):?Intervalo  {
+    public function leerIntervaloPorId(int $id, \DateTime $fecha):?Intervalo  {
 
-        $query = "SELECT * FROM intervaloDia WHERE id= ?";
+        $query = "SELECT * FROM intervaloDia WHERE id= ? and idHorarioDiario=?";
         $sentencia = $this->conexion->prepare($query);
         $sentencia->bindParam(1, $id);
+        $sentencia->bindParam(2, $fecha);
+
         $sentencia->execute();
 
         if (($fila = $sentencia->fetch())) {
-            return new Intervalo(
-                $fila['inicioIntervalo'],
-                $fila['finIntervalo']
-            );
+            return $this->convertirArrayIntervalo($fila);
+        }
+        else{
+            throw new PersonaNoEncontradaException("El intervalo no existe en la base de datos");
+        }
+
+    }
+    /*******************************************************************************/
+    public function leerIntervaloPorHoraInicio(Intervalo $intervalo, \DateTime $fecha):?Intervalo  {
+        $horaInicio = $intervalo->getHoraInicio();
+        $query = "SELECT * FROM intervaloDia WHERE horaInicio= ? and idHorarioDiario=?";
+        $sentencia = $this->conexion->prepare($query);
+        $sentencia->bindParam(1, $horaInicio);
+        $sentencia->bindParam(2, $fecha);
+
+        $sentencia->execute();
+
+        if (($fila = $sentencia->fetch())) {
+            return $this->convertirArrayIntervalo($fila);
+
         }
         else{
             throw new PersonaNoEncontradaException("El intervalo no existe en la base de datos");
@@ -55,30 +75,32 @@ values (:inicio,:fin,:disponibilidad)';
     }
     /*****************************************************************************/
 
-    public function leerIntervaloPorIdHorario(\DateTime $fechaHorario):?Persona{
+    public function leerIntervalosDelDia(\DateTime $fechaHorario):?Intervalo{
         $query = "SELECT * FROM intervaloDia WHERE idHorarioDiario=?";
 
-        $sentencia= $this->getConexion()->prepare($query);
+        $sentencia= $this->conexion->prepare($query);
         $sentencia->bindParam(1,$fechaHorario);
 
-        if($sentencia->execute()){
-            $resultado = $sentencia->fetch();
-            return $this->convertirArrayIntervalo($resultado);
-        }else{
-            return null;
+        $arrayResultados = $sentencia->fetchAll();
+        $arrayObjetos = [];
+
+        foreach ($arrayResultados as $filaPersona){
+            $arrayObjetos[] = $this->convertirArrayIntervalo($filaPersona);
         }
+
+        return $arrayObjetos;
+
     }
     /*****************************************************************************/
 
-    public function borrarPorFechaIntervalo(\DateTime $fecha,int $id):?Intervalo {
-        $query = "delete from intervaloDia where id=? and idHorarioDiario=?";
-        $sentencia = $this->getConexion()->prepare($query);
-        $sentencia->bindParam(1,$id);
-        $sentencia->bindParam(2,$fecha);
+    public function borrarIntervalosDelDia(\DateTime $fecha):?Intervalo {
+        $query = "delete from intervaloDia where idHorarioDiario=?";
+        $sentencia= $this->conexion->prepare($query);
+        $sentencia->bindParam(1,$fecha);
 
         $resultado = $sentencia->execute();
         try{
-            $intervalo = $this->leerIntervaloPorIdHorario($fecha);
+            $intervalo = $this->leerIntervalosDelDia($fecha);
         }catch(PersonaNoEncontradaException $e){
             throw new PersonaNoEncontradaException("No se puede borrar");
         }
@@ -89,18 +111,34 @@ values (:inicio,:fin,:disponibilidad)';
             return $resultado;
         }
     }
-    /*****************************************************************************/
-    public function borrarIntervalo(Intervalo $intervalo,\DateTime $fecha): ?Intervalo
-    {
-        $resultado = $this->borrarIntervaloPorFecha($fecha);
+    /*************************************************************************/
+    public function borrarUnIntervaloPorId(int $id,\DateTime $fecha):?Intervalo {
+        $intervalo = $this->leerIntervaloPorId($id,$fecha);
+        $this->borrarUnIntervalo($intervalo,$fecha);
         return $intervalo;
+    }
+    /*****************************************************************************/
+    public function borrarUnIntervalo(Intervalo $intervalo,\DateTime $fecha): ?Intervalo
+    {
+        $query = "delete from intervaloDia where horaInicio=? and idHorarioDiario=?";
+        $sentencia= $this->conexion->prepare($query);
+        $horaInicio = $intervalo->getHoraInicio();
+        $sentencia->bindParam(1,$horaInicio);
+        $sentencia->bindParam(2,$fecha);
+        $resultado = $sentencia->execute();
+
+        if($resultado){
+            return $intervalo;
+        }else{
+            return $resultado;
+        }
     }
 
     /*****************************************************************************/
 
     public function modificarIntervalo(Intervalo $intervalo,int $fecha):?Intervalo{
-        $query = "update intervaloDia set inicioIntervalo=:inicio,
-                                          finIntervalo=:fin,
+        $query = "update intervaloDia set horaInicio=:inicio,
+                                          horaFin=:fin,
                                           disponibilidad=:dispo
                         
                                     where idHorarioDiario=:idh";
